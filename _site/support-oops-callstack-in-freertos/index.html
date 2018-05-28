@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>support Oops callstack in FreeRtos - Bruce's blog</title>
+
+  <!-- Edit site and author settings in `_config.yml` to make the social details your own -->
+
+    <meta content="Bruce's blog" property="og:site_name">
+  
+    <meta content="support Oops callstack in FreeRtos" property="og:title">
+  
+  
+    <meta content="article" property="og:type">
+  
+  
+    <meta content="不积跬步无以至千里" property="og:description">
+  
+  
+    <meta content="http://localhost:4000/support-oops-callstack-in-freertos/" property="og:url">
+  
+  
+    <meta content="2018-05-28T05:00:00+08:00" property="article:published_time">
+    <meta content="http://localhost:4000/about/" property="article:author">
+  
+  
+    <meta content="http://localhost:4000/assets/img/Bruce.png" property="og:image">
+  
+  
+    
+  
+  
+    
+    <meta content="FreeRtos" property="article:tag">
+    
+  
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@">
+    <meta name="twitter:creator" content="@">
+  
+    <meta name="twitter:title" content="support Oops callstack in FreeRtos">
+  
+  
+    <meta name="twitter:url" content="http://localhost:4000/support-oops-callstack-in-freertos/">
+  
+  
+    <meta name="twitter:description" content="不积跬步无以至千里">
+  
+  
+    <meta name="twitter:image:src" content="http://localhost:4000/assets/img/Bruce.png">
+  
+
+	<meta name="description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="">
+	<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicon/apple-touch-icon-114x114.png">
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#263959">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#263959">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#263959">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/assets/fonts/font-awesome/css/font-awesome.min.css">
+	<!-- Styles -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <aside class="sidebar">
+  <header>
+    <div class="about">
+      <div class="cover-author-image">
+        <a href="/"><img src="/assets/img/Bruce.png" alt="Bruce Cheng"></a>
+      </div>
+      <div class="author-name">Bruce Cheng</div>
+      <p>宁静致远.</p>
+    </div>
+  </header> <!-- End Header -->
+  <footer>
+    <section class="contact">
+      <h3 class="contact-title">Contact me</h3>
+      <ul>
+        
+        
+        
+          <li class="github"><a href="http://github.com/successcw" target="_blank"><i class="fa fa-github"></i></a></li>
+        
+        
+        
+          <li class="email"><a href="mailto:festival1000@126.com# add your Email address"><i class="fa fa-envelope-o"></i></a></li>
+        
+      </ul>
+    </section> <!-- End Section Contact -->
+    <div class="copyright">
+      <p>2018 &copy; Bruce Cheng</p>
+    </div>
+  </footer> <!-- End Footer -->
+</aside> <!-- End Sidebar -->
+<div class="content-box clearfix">
+  <article class="article-page">
+  <div class="page-content">
+    
+    
+    <div class="wrap-content">
+      <header class="header-page">
+        <h1 class="page-title">support Oops callstack in FreeRtos</h1>
+        <div class="page-date"><span>2018, May 28&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+      </header>
+      <p>Linux Oops可以打出callstack，类似如下</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>[   58.287873] Kernel panic - not syncing: Fatal exception
+[   58.293116] CPU0: stopping
+[   58.295835] CPU: 0 PID: 0 Comm: swapper/0 Tainted: G      D W       4.9.38 #2
+[   58.302981] Hardware name: Artosyn Sirius Family
+[   58.307604] Backtrace: 
+[   58.310075] [&lt;8010aa5c&gt;] (dump_backtrace) from [&lt;8010acf8&gt;] (show_stack+0x18/0x1c)
+[   58.317660]  r7:80c01f20 r6:600f0193 r5:00000000 r4:80c1354c
+[   58.323337] [&lt;8010ace0&gt;] (show_stack) from [&lt;80316998&gt;] (dump_stack+0x84/0xa0)
+[   58.330577] [&lt;80316914&gt;] (dump_stack) from [&lt;8010c7b8&gt;] (handle_IPI+0xd4/0x190)
+[   58.337900]  r7:80c01f20 r6:00000000 r5:00000000 r4:80c289e0
+[   58.343575] [&lt;8010c6e4&gt;] (handle_IPI) from [&lt;80101464&gt;] (gic_handle_irq+0x80/0x9c)
+[   58.351161]  r7:80c136f8 r6:80c01f20 r5:80c03b28 r4:a0802000
+[   58.356834] [&lt;801013e4&gt;] (gic_handle_irq) from [&lt;8010b7b8&gt;] (__irq_svc+0x58/0x74)
+</code></pre>
+</div>
+<p>之所以能打出callstack主要是依靠CONFIG_KALLSYMS_ALL， 该宏会将编译生成的符号表加入到elf文件中
+Oops时，通过SP和FP找到对应的stack frame，然后查符号表回溯出整个backtrace.
+<img src="/assets/img/sp-fp.png" alt="SP_FP" /></p>
+
+<h2 id="porting-to-freertos">Porting to FreeRTOS</h2>
+
+<ul>
+  <li>移植kernel/kallsyms.c</li>
+  <li>移植scripts/kallsyms.c，并生成执行文件kallsyms</li>
+  <li>在Makefile中添加kallsyms到target.bin
+    <div class="highlighter-rouge"><pre class="highlight"><code>$(TARGET).bin: $(OBJ_S) $(OBJ_C) 
+  @$(LD) $^ $(LDFLAGS)  -T$(LINK_SCRIPT) -o $(TARGET)_temp1.elf
+  $(NM) -n $(TARGET)_temp1.elf | ./kallsyms --all-symbols --base-relative &gt; kallsyms_temp1.S
+  $(CC) $(CFLAGS) -c -o kallsyms_temp1.o kallsyms_temp1.S
+  @$(LD) $^ kallsyms_temp1.o $(LDFLAGS)  -T$(LINK_SCRIPT) -o $(TARGET)_temp2.elf
+  $(NM) -n $(TARGET)_temp2.elf | ./kallsyms --all-symbols --base-relative &gt; kallsyms_temp2.S
+  $(CC) $(CFLAGS) -c -o kallsyms_temp2.o kallsyms_temp2.S
+  @$(LD) $^ kallsyms_temp2.o $(LDFLAGS)  -T$(LINK_SCRIPT) -o $(TARGET).elf
+  $(OBJCOPY) -O binary $(TARGET).elf $@
+  $(OBJDUMP) -D $(TARGET).elf &gt; $(TARGET).dis
+  $(NM) $(TARGET).elf &gt; $(TARGET).map
+</code></pre>
+    </div>
+    <p>具体含义是：</p>
+    <ol>
+      <li>生成elf</li>
+      <li>生成elf对应的kallsyms</li>
+      <li>将kallsyms编译为.o并加入到elf中</li>
+      <li>生成第3步elf对应的kallsyms，这个kallsyms包含所有的符号表（也包含kallsyms这个模块本身的符号信息）</li>
+      <li>将kallsyms编译为.o并加入到elf中</li>
+      <li>通过elf生成.bin文件</li>
+    </ol>
+  </li>
+</ul>
+
+<!---
+![I and My friends](/assets/img/we-in-rest.jpg)
+-->
+
+
+      <div class="page-footer">
+      <!---
+        <div class="page-share">
+          <a href="https://twitter.com/intent/tweet?text=support Oops callstack in FreeRtos&url=http://localhost:4000/support-oops-callstack-in-freertos/" title="Share on Twitter" rel="nofollow" target="_blank">Twitter</a>
+          <a href="https://facebook.com/sharer.php?u=http://localhost:4000/support-oops-callstack-in-freertos/" title="Share on Facebook" rel="nofollow" target="_blank">Facebook</a>
+          <a href="https://plus.google.com/share?url=http://localhost:4000/support-oops-callstack-in-freertos/" title="Share on Google+" rel="nofollow" target="_blank">Google+</a>
+        </div>
+      -->
+        <div class="page-tag">
+          
+            <a href="/tags#FreeRtos" class="tag">&#35; FreeRtos</a>
+          
+        </div>
+      </div>
+      <section class="comment-area">
+  <div class="comment-wrapper">
+    
+    <div id="disqus_thread" class="article-comments"></div>
+    <script>
+      (function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//mr-brown.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+  </div>
+</section> <!-- End Comment Area -->
+
+    </div> <!-- End Wrap Content -->
+  </div> <!-- End Page Content -->
+</article> <!-- End Article Page -->
+
+</div>
+
+  </div>
+  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script> <!-- End Analytics -->
+
+</body>
+</html>
