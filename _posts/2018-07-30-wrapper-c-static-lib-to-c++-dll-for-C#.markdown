@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Wrapper c static lib to c++ dll for C# 
-date: 2018-07-30 00:00:00 +0800
+date: 2018-07-30 08:00:00 +0800
 description: # Add post description (optional) 
 img: # Add image post (optional)
 tags: [Visual Studio, DLL, lib]# add tag
