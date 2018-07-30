@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Call DLL from C in visual studio
-date: 2018-07-29 00:00:00 +0300
+date: 2018-07-29 00:00:00 +0800
 description: # Add post description (optional) 
 img: # Add image post (optional)
 tags: [Visual Studio, DLL, C]# add tag
