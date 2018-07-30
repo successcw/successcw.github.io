@@ -1,6 +1,6 @@
 ---
 layout: post
-title: support Oops callstack in FreeRtos
+title: Support Oops callstack in FreeRtos
 date: 2018-05-28 00:00:00 +0300
 description: # Add post description (optional) 
 img: # Add image post (optional)
