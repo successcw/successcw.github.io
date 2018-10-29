@@ -8,8 +8,7 @@ tags: [Android, Camera, Qcom, HAL]# add tag
 ---
 
 ## 背景
-由于项目要求，需要给android设备添加一个虚拟摄像头，preview的数据是从远程通过h264传过来
-
+As project requirement, we need add a virutal camera, preview frame is read from usb h264 stream
 
 ## 在上层入口处做欺骗
 hardware/qcom/camera/QCamera2/QCamera2Factory.cpp
@@ -93,7 +92,7 @@ camera_device_ops_t VCamera2HardwareInterface::mCameraOps = {
 };
 ```
 
-set_preview流程
+start_preview流程
 ![framework]({{site.baseurl}}/assets/img/preview-process.png)
 
 ## Debuging skill
