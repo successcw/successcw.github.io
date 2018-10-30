@@ -13,7 +13,7 @@ As project requirement, we need add a virutal camera, preview frame is read from
 ## 在上层入口处做欺骗
 hardware/qcom/camera/QCamera2/QCamera2Factory.cpp
 
-```
+```c++
 QCamera2Factory::QCamera2Factory()
 {
     ...
@@ -58,7 +58,7 @@ int QCamera2Factory::cameraDeviceOpen(int camera_id,
 
 ## 实现VCamera2HardwareInterface
 依照HAL1的设定去依次实现这些接口
-```
+```c++
 camera_device_ops_t VCamera2HardwareInterface::mCameraOps = {
     .set_preview_window =        VCamera2HardwareInterface::set_preview_window,
     .set_callbacks =             VCamera2HardwareInterface::set_CallBacks,
@@ -95,7 +95,57 @@ camera_device_ops_t VCamera2HardwareInterface::mCameraOps = {
 start_preview流程
 ![framework]({{site.baseurl}}/assets/img/preview-process.png)
 
-## Debuging skill
-* MediaCodec(to be add)
-* Sepolicy(to be add)
-* Debug script(to be add)
+## Debuging point
+* MediaCodec初始化失败  
+整个虚拟摄像头实现在hal层，从android 8.0开始，hal层使用vendor binder(/dev/vndbinder)通信
+![framework]({{site.baseurl}}/assets/img/binder.png)
+``` c
+/hardware/interface/camera/provider/2.4/default/service.cpp
+int main()
+{
+    ALOGI("Camera provider Service is starting.");
+    // The camera HAL may communicate to other vendor components via
+    // /dev/vndbinder
+    android::ProcessState::initWithDriver("/dev/vndbinder");
+    return defaultPassthroughServiceImplementation<ICameraProvider>("legacy/0", /*maxThreads*/ 6);
+}
+```
+在hal层调用mediacodec去解码h264码流，需要访问到以下service  
+**media.metrics**  
+**media.resource_manager**  
+**media.player**  
+而这些service使用/dev/binder通信，所以会造成mediacodec初始化失败  
+解决方案：添加hack方法来规避 
+``` c
+frameworks/native/libs/binder/IServiceManager.cpp
+virtual sp<IBinder> getService(const String16& name) const
+{
+    unsigned n;
+    //virtual camera: start
+    if (!strcmp(ProcessState::self()->getDriverName().c_str(), "/dev/vndbinder") &&
+            (!strcmp(String8(name).string(), "media.metrics") ||
+             !strcmp(String8(name).string(), "media.resource_manager") ||
+             !strcmp(String8(name).string(), "media.player"))) {
+        ALOGI("access binder ServiceManager from vndbinder is not allowed, trick here^^");
+        return NULL;
+    }
+    //virtual camera: end
+    for (n = 0; n < 5; n++){
+        if (n > 0) {
+            if (!strcmp(ProcessState::self()->getDriverName().c_str(), "/dev/vndbinder")) {
+                ALOGI("Waiting for vendor service %s...", String8(name).string());
+                CallStack stack(LOG_TAG);
+            } else {
+                ALOGI("Waiting for service %s...", String8(name).string());
+            }
+            sleep(1);
+        }
+	}
+}
+```
+* Debug script  
+开启hal log  
+adb shell setprop persist.camera.hal.debug 6  
+adb shell setprop persist.camera.mci.debug 6  
+adb shell setprop persist.camera.global.debug 6  
+
