@@ -142,7 +142,15 @@ virtual sp<IBinder> getService(const String16& name) const
         }
 	}
 }
-```
+```  
+* 微信preview无图像  
+普通camera preview，原理是应用层传surface到HAL层，由HAL层刷preview frame到这个surface  
+但微信等应用是拿到frame数据后自行来显示的，所以还需要在preview thread中做以下处理  
+``` c
+if (CAMERA_MSG_PREVIEW_FRAME) {
+    data_cb(msgType, previewMem, 0, metadata, user);
+}
+```  
 * Debug script  
 开启hal log  
 adb shell setprop persist.camera.hal.debug 6  
