@@ -2,16 +2,17 @@
 layout: post
 title: Call DLL from C in visual studio
 date: 2018-07-29 08:00:00 +0800
-description: # Add post description (optional) 
+description: # Add post description (optional)
 img: # Add image post (optional)
-tags: [Visual Studio, DLL, C]# add tag
+categories: DLL
+tags: [DLL]# add tag
 ---
 ## Create a new empty project in visual studio
 
 * create empty project callDLL
 <img src="{{site.baseurl}}/assets/img/call-dll-1.png" width="80%" height="80%">
- 
-* add main.c <br> 
+
+* add main.c <br>
 <img src="{{site.baseurl}}/assets/img/call-dll-2.png" width="80%" height="80%">
 
 ## parse ini file
@@ -44,8 +45,8 @@ static int handler(void* user, const char* section, const char* name,
         } else {
                 return 0;
         }
-        return 1; 
-} 
+        return 1;
+}
 
 void main()
 {

@@ -4,7 +4,8 @@ title: How to add fake camera to android qcom HAL
 date: 2018-10-29 08:00:00 +0800
 description: # Add post description (optional)
 img: # Add image post (optional)
-tags: [Android, Camera, Qcom, HAL]# add tag
+categories: Android
+tags: [Android]# add tag
 ---
 
 ## 背景
@@ -96,7 +97,7 @@ start_preview流程
 ![framework]({{site.baseurl}}/assets/img/preview-process.png)
 
 ## Debuging point
-* MediaCodec初始化失败  
+* MediaCodec初始化失败
 整个虚拟摄像头实现在hal层，从android 8.0开始，hal层使用vendor binder(/dev/vndbinder)通信
 ![framework]({{site.baseurl}}/assets/img/binder.png)
 ``` c
@@ -110,12 +111,12 @@ int main()
     return defaultPassthroughServiceImplementation<ICameraProvider>("legacy/0", /*maxThreads*/ 6);
 }
 ```
-在hal层调用mediacodec去解码h264码流，需要访问到以下service  
-**media.metrics**  
-**media.resource_manager**  
-**media.player**  
-而这些service使用/dev/binder通信，所以会造成mediacodec初始化失败  
-解决方案：添加hack方法来规避 
+在hal层调用mediacodec去解码h264码流，需要访问到以下service
+**media.metrics**
+**media.resource_manager**
+**media.player**
+而这些service使用/dev/binder通信，所以会造成mediacodec初始化失败
+解决方案：添加hack方法来规避
 ``` c
 frameworks/native/libs/binder/IServiceManager.cpp
 virtual sp<IBinder> getService(const String16& name) const
@@ -142,18 +143,18 @@ virtual sp<IBinder> getService(const String16& name) const
         }
 	}
 }
-```  
-* 微信preview无图像  
-普通camera preview，原理是应用层传surface到HAL层，由HAL层刷preview frame到这个surface  
-但微信等应用是拿到frame数据后自行来显示的，所以还需要在preview thread中做以下处理  
+```
+* 微信preview无图像
+普通camera preview，原理是应用层传surface到HAL层，由HAL层刷preview frame到这个surface
+但微信等应用是拿到frame数据后自行来显示的，所以还需要在preview thread中做以下处理
 ``` c
 if (CAMERA_MSG_PREVIEW_FRAME) {
     data_cb(msgType, previewMem, 0, metadata, user);
 }
-```  
-* Debug script  
-开启hal log  
-adb shell setprop persist.camera.hal.debug 6  
-adb shell setprop persist.camera.mci.debug 6  
-adb shell setprop persist.camera.global.debug 6  
+```
+* Debug script
+开启hal log
+adb shell setprop persist.camera.hal.debug 6
+adb shell setprop persist.camera.mci.debug 6
+adb shell setprop persist.camera.global.debug 6
 

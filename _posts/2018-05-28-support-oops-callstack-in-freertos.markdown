@@ -2,8 +2,9 @@
 layout: post
 title: Support Oops callstack in FreeRtos
 date: 2018-05-28 00:00:00 +0300
-description: # Add post description (optional) 
+description: # Add post description (optional)
 img: # Add image post (optional)
+categories: FreeRtos
 tags: [FreeRtos] # add tag
 ---
 Linux Oops可以打出callstack，类似如下
@@ -12,7 +13,7 @@ Linux Oops可以打出callstack，类似如下
 [   58.293116] CPU0: stopping
 [   58.295835] CPU: 0 PID: 0 Comm: swapper/0 Tainted: G      D W       4.9.38 #2
 [   58.302981] Hardware name: Artosyn Sirius Family
-[   58.307604] Backtrace: 
+[   58.307604] Backtrace:
 [   58.310075] [<8010aa5c>] (dump_backtrace) from [<8010acf8>] (show_stack+0x18/0x1c)
 [   58.317660]  r7:80c01f20 r6:600f0193 r5:00000000 r4:80c1354c
 [   58.323337] [<8010ace0>] (show_stack) from [<80316998>] (dump_stack+0x84/0xa0)
@@ -32,7 +33,7 @@ Oops时，通过SP和FP找到对应的stack frame，然后查符号表回溯出�
 * 移植scripts/kallsyms.c，并生成执行文件kallsyms
 * 在Makefile中添加kallsyms到target.bin
   ```
-  $(TARGET).bin: $(OBJ_S) $(OBJ_C) 
+  $(TARGET).bin: $(OBJ_S) $(OBJ_C)
     @$(LD) $^ $(LDFLAGS)  -T$(LINK_SCRIPT) -o $(TARGET)_temp1.elf
     $(NM) -n $(TARGET)_temp1.elf | ./kallsyms --all-symbols --base-relative > kallsyms_temp1.S
     $(CC) $(CFLAGS) -c -o kallsyms_temp1.o kallsyms_temp1.S

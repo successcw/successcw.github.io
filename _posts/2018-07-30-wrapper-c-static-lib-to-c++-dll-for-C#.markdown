@@ -1,17 +1,18 @@
 ---
 layout: post
-title: Wrapper c static lib to c++ dll for C# 
+title: Wrapper c static lib to c++ dll for C#
 date: 2018-07-30 08:00:00 +0800
-description: # Add post description (optional) 
+description: # Add post description (optional)
 img: # Add image post (optional)
-tags: [Visual Studio, DLL, lib]# add tag
+categories: DLL
+tags: [DLL]# add tag
 ---
 ## Create DLL project in visual studio
 
 * create VisualC++ DLL project sn_dll_test
 <img src="{{site.baseurl}}/assets/img/wrapper-static-lib-1.png" width="80%" height="80%">
- 
-* add dependence, input "your_lib_name.lib" <br> 
+
+* add dependence, input "your_lib_name.lib" <br>
 <img src="{{site.baseurl}}/assets/img/wrapper-static-lib-2.png" width="80%" height="80%">
 
 * change configuration type to DLL
