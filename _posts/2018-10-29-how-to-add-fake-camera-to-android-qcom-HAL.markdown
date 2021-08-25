@@ -9,7 +9,7 @@ tags: [Android]# add tag
 ---
 
 ## 背景
-As project requirement, we need add a virutal camera, preview frame is read from usb h264 stream
+As project requirement, we need add a virutal camera, preview frame is read from usb h264 stream.
 
 ## 在上层入口处做欺骗
 hardware/qcom/camera/QCamera2/QCamera2Factory.cpp
