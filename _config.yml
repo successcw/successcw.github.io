@@ -185,12 +185,17 @@ defaults:
 #   shortname: "Your Disqus username"
 
 # Gitment comments
-gitment:
-  username: "successcw"
-  repo: "blog_comment"
-  client_id: "b4914d6f117e93f51fa4"
-  client_secret: "f646a93c2c7cbb5b725484043147eac606283086"
+# gitment:
+#   username: "Your GitHub username"
+#   repo: "The repo to store comments"
+#   client_id: "Your client ID"
+#   client_secret: "Your client secret"
 #   redirect_uri: "Your redirect url"   # If you use a custom domain name
+# Gitment comments
+
+# utterance
+utterance:
+  enable: "true"
 
 # Build settings
 # highlighter: none

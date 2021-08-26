@@ -69,6 +69,10 @@ sidebar:
       {%- include extensions/comments/gitment.html -%}
       {%- endif -%}
 
+      {%- if site.utterance.enable -%}
+      {%- include extensions/comments/utterance.html -%}
+      {%- endif -%}
+
       {%- endif -%}
     </div>
     {%- endif -%}
