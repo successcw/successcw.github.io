@@ -40,7 +40,7 @@ In this case, please don't check "Initialize this repository with a README" when
 * git push origin main
 
 ## Reference
-1.[github][1]
+1.[github][1]  
 2.[How to Push Local Git Repo to Remote Repo in GitHub][2]
 
 
