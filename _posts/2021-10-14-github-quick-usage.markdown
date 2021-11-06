@@ -34,7 +34,8 @@ In this case, please don't check "Initialize this repository with a README" when
 
 #### push
 * git remote add origin github_repository_url
-* git push origin main
+* git push --set-upstream origin main
+Note: set-upstream only need once, afterwards, use "git push" instead
 
 ## Reference
 1.[github][1]  
