@@ -34,9 +34,6 @@ In this case, please don't check "Initialize this repository with a README" when
 
 #### push
 * git remote add origin github_repository_url
-* git pull
-> if unrelated histories error
-> * git pull origin main --allow-unrelated-histories
 * git push origin main
 
 ## Reference
