@@ -1,8 +1,8 @@
 ---
 layout: post
 title: Truffle introduction
-categories: blockchain
-tags: [blockchain]
+categories: Blockchain
+tags: [Blockchain]
 ---
 
 ## Install
