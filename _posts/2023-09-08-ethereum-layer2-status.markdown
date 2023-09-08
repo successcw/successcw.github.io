@@ -1,6 +1,6 @@
 ---
 layout: post
-title: ethereum layer2 status
+title: Ethereum layer2 status
 categories: Blockchain
 tags: [Blockchain]
 ---
