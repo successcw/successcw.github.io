@@ -34,8 +34,8 @@ a * b = k
 2. Using Pa and Pb to represent price of TokenA and TokenB.  
 Pa = b/a  
 Pb = a/b  
-3. Through 1 and 2, we can derive the relationship between the quantity of tokens and their prices
-a = sqrt(k/Pa)
+3. Through 1 and 2, we can derive the relationship between the quantity of tokens and their prices  
+a = sqrt(k/Pa)  
 b = sqrt(k*Pa)
 4. Calculate impermanent loss  
 To simplify the calculations, let's make a few assumptions here.  
