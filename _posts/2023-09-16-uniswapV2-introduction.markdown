@@ -19,8 +19,8 @@ A web interface that allow for easy interaction with the Uniswap protocol.
 * Uniswap Governance
 A governance system for governing the Uniswap Protocol, enabled by the UNI token.
 
-It's worth mentioning Uniswap's innovation: AMM, represented by a simple formula
-x * y = k
+It's worth mentioning Uniswap's innovation: AMM, represented by a simple formula  
+x * y = k  
 x is TokenA's quantity. Y is TokenB's quantity. The product of k stays same after tradings.
 TokenA and TokenB constitute a trading part, provided by Liqudity provider.
 Uniswap consists of two roles: traders and Liqudity providers, they are counterparties to each other.
@@ -29,19 +29,19 @@ Uniswap consists of two roles: traders and Liqudity providers, they are counterp
 Unlike centralized exchange, where becoming a LP typically requires a high barrier to entry, in Uniswap, anyone can become an LP by depositing any two arbitrary assets.
 Impermanent loss is related to LP, it means that the value of assets deposited by LP is lower when withdrawn compared to when they were deposited. The larger this difference, the greater the impermanent loss. Impermanent loss is unavoidable according to AMM, so why would anyone choose to become an LP and accept the loss? This is because Uniswap charges fees to traders and compensates LP.
 Let's reason about impermanent loss and LP returns.
-1. Using a and b to represent quantity of TokenA and TokenB.
+1. Using a and b to represent quantity of TokenA and TokenB.  
 a * b = k
-2. Using Pa and Pb to represent price of TokenA and TokenB.
-Pa = b/a
-Pb = a/b
+2. Using Pa and Pb to represent price of TokenA and TokenB.  
+Pa = b/a  
+Pb = a/b  
 3. Through 1 and 2, we can derive the relationship between the quantity of tokens and their prices
 a = sqrt(k/Pa)
 b = sqrt(k*Pa)
-4. Calculate impermanent loss
-To simplify the calculations, let's make a few assumptions here.
-TokenA: ETH
-TokenB: USD
-1eth = 1000USD
+4. Calculate impermanent loss  
+To simplify the calculations, let's make a few assumptions here.  
+TokenA: ETH  
+TokenB: USD  
+1eth = 1000USD  
 The user has 2000 USD, let's compare three scenarios:
 * Holding 2000 USD, cash postion
 * Holding 1ETH and 1000 USD, half-cash position
@@ -49,18 +49,18 @@ The user has 2000 USD, let's compare three scenarios:
 <img src="{{site.baseurl}}/assets/img/univ2_1.png">
 Note: ignore fees
 The blue curve represents the LP curve, and the black curve represents the half-cash postion. As shown in the chart,the value of LP is same as half-cash postion's only when initial price point(1000), below at all other times. This difference represents impermanent loss.
-5. Calculate LP returns
-LP returns = a * Pa + b * Pb = sqrt(k/Pa) * Pa + sqrt(K*Pa)*Pb
-The formula can be represented simply as bellow as TokenB's price is USD = 1
-LP returns = sqrt(k/Pa) * Pa + sqrt(K*Pa)
+5. Calculate LP returns  
+LP returns = a * Pa + b * Pb = sqrt(k/Pa) * Pa + sqrt(K*Pa)*Pb  
+The formula can be represented simply as bellow as TokenB's price is USD = 1  
+LP returns = sqrt(k/Pa) * Pa + sqrt(K*Pa)  
 <img src="{{site.baseurl}}/assets/img/univ2_2.png">
-Let's add fee, assume fee is 10% of initial assests, r = 10%
-LP returns with fee = LP returns + r*k*2
+Let's add fee, assume fee is 10% of initial assests, r = 10%  
+LP returns with fee = LP returns + r*k*2  
 <img src="{{site.baseurl}}/assets/img/univ2_3.png">
 
 As indicated by the red cure, after adding fee income, LP returns exceed the half-cash position within a certain range. This explains why some people choose to become LPs.
-Let's check the details of impermanent loss.
-I = (LP returns - half cash position)/half cash position
+Let's check the details of impermanent loss.  
+I = (LP returns - half cash position)/half cash position  
 Substituting into the formula above, we can derive:
 <img src="{{site.baseurl}}/assets/img/univ2_4.png">
 This formula can be simply represented by(From a graphical perspective, it appears that the x-axis has been scaled down by a factor of k. It can also be understood that in the first equation, 'x' represents the price of TokenA, while in the second equation, 'x' represents the relative price ratio of TokenA compared to its initial price, which is k)
