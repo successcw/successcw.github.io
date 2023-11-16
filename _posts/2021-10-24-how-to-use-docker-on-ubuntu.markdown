@@ -22,39 +22,34 @@ echo \
 sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io
 ```
-# Mount volume
-Volumes are managed by docker service, and can be shared by many docker containers.
-1. Create volume  
-sudo docker volume create my-vol
-2. Inspect a volume  
-sudo docker volume inspect my-vol
-3. Remove a volume  
-sudo docker volume rm my-vol
+If something is error, please use following script to install it automatically.
+```
+wget https://get.docker.com get_docker.sh
+./get_docker.sh
+```
 
 # Create container ubuntu20.04 in docker
 Create a ubuntu20.04 container with:
 * Timezone: Beijing
 * name: bruce_test
-* mount: my-vol to /app
+* mount: /path/to/host to /path/to/container
 * interactive terminal
 * bash shell  
 
 ```Bash
-sudo docker create -e TZ=Asia/Beijing --name bruce_test --mount source=my-vol,target=/app -it --entrypoint "/bin/bash" ubuntu:20.04  
+sudo docker create -e TZ=Asia/Beijing --name bruce_test --mount type=bind,source=/path/to/host,target=/path/to/container -it --entrypoint "/bin/bash" ubuntu:20.04  
 ```
 If it's the first time to create ubuntu:20.04, will download ubuntu:20.04 from docker hub  
 Check if mount correctly: sudo docker inspect bruce_test
 ```Bash
         "Mounts": [
             {
-                "Type": "volume",
-                "Name": "my-vol",
-                "Source": "/var/lib/docker/volumes/my-vol/_data",
-                "Destination": "/app",
-                "Driver": "local",
-                "Mode": "z",
+                "Type": "bind",
+                "Source": "/path/to/host",
+                "Destination": "/path/to/container",
+                "Mode": "",
                 "RW": true,
-                "Propagation": ""
+                "Propagation": "rprivate"
             }
         ]
 ```
